@@ -1,5 +1,5 @@
 /**
- * Copyright 2014-2015, Facebook, Inc.
+ * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -13,7 +13,7 @@
 
 var adler32 = require('adler32');
 
-describe('shallowEqual', function() {
+describe('adler32', function() {
   it('generates differing checksums', function() {
     expect(adler32('foo')).not.toBe(adler32('bar'));
   });
@@ -29,7 +29,7 @@ describe('shallowEqual', function() {
   it('doesn\'t barf on large inputs', function() {
     var str = '';
     for (var i = 0; i < 100000; i++) {
-      str = str + 'This will be repeated to be very large indeed. ';
+      str += 'This will be repeated to be very large indeed. ';
     }
     expect(adler32(str)).toBe(692898118);
   });

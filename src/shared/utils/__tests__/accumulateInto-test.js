@@ -1,5 +1,5 @@
 /**
- * Copyright 2014-2015, Facebook, Inc.
+ * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11,8 +11,8 @@
 
 'use strict';
 
-require('mock-modules')
-  .dontMock('accumulateInto');
+jest
+  .unmock('accumulateInto');
 
 var accumulateInto;
 
@@ -26,8 +26,7 @@ describe('accumulateInto', function() {
     expect(function() {
       accumulateInto([], null);
     }).toThrow(
-      'Invariant Violation: accumulateInto(...): Accumulated items must not ' +
-      'be null or undefined.'
+      'accumulateInto(...): Accumulated items must not be null or undefined.'
     );
   });
 

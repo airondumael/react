@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11,6 +11,7 @@
 
 'use strict';
 
+var KeyEscapeUtils = require('KeyEscapeUtils');
 var traverseAllChildren = require('traverseAllChildren');
 var warning = require('warning');
 
@@ -29,7 +30,7 @@ function flattenSingleChildIntoContext(traverseContext, child, name) {
       'flattenChildren(...): Encountered two children with the same key, ' +
       '`%s`. Child keys must be unique; when two children share a key, only ' +
       'the first child will be used.',
-      name
+      KeyEscapeUtils.unescape(name)
     );
   }
   if (keyUnique && child != null) {

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -12,15 +12,17 @@
 'use strict';
 
 var React;
+var ReactDOMServer;
 
 describe('ReactDOMSVG', function() {
 
   beforeEach(function() {
     React = require('React');
+    ReactDOMServer = require('ReactDOMServer');
   });
 
   it('creates initial namespaced markup', function() {
-    var markup = React.renderToString(
+    var markup = ReactDOMServer.renderToString(
       <svg>
         <image xlinkHref="http://i.imgur.com/w7GCRPb.png" />
       </svg>

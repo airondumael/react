@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -33,7 +33,7 @@ var React = require('React');
  *
  *   var instances = renderHierarchy(
  *     function(ComponentA[, ComponentB, ComponentC]) {
- *       React.render(<ComponentA />, ...);
+ *       ReactDOM.render(<ComponentA />, ...);
  *     })
  *   );
  *   instances[0][0]; // First return value of first render method.

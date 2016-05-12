@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11,7 +11,6 @@
 
 'use strict';
 
-var assign = require('Object.assign');
 var warning = require('warning');
 
 /**
@@ -20,31 +19,35 @@ var warning = require('warning');
  *
  * @param {string} fnName The name of the function
  * @param {string} newModule The module that fn will exist in
+ * @param {string} newPackage The module that fn will exist in
  * @param {*} ctx The context this forwarded call should run in
  * @param {function} fn The function to forward on to
  * @return {function} The function that will warn once and then call fn
  */
-function deprecated(fnName, newModule, ctx, fn) {
+function deprecated(fnName, newModule, newPackage, ctx, fn) {
   var warned = false;
   if (__DEV__) {
     var newFn = function() {
       warning(
         warned,
+        /* eslint-disable no-useless-concat */
         // Require examples in this string must be split to prevent React's
         // build tools from mistaking them for real requires.
         // Otherwise the build tools will attempt to build a '%s' module.
-        '`require' + '("react").%s` is deprecated. Please use `require' + '("%s").%s` ' +
+        'React.%s is deprecated. Please use %s.%s from require' + '(\'%s\') ' +
         'instead.',
         fnName,
         newModule,
-        fnName
+        fnName,
+        newPackage
       );
+      /* eslint-enable no-useless-concat */
       warned = true;
       return fn.apply(ctx, arguments);
     };
     // We need to make sure all properties of the original fn are copied over.
     // In particular, this is needed to support PropTypes
-    return assign(newFn, fn);
+    return Object.assign(newFn, fn);
   }
 
   return fn;

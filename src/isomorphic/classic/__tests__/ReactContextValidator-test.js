@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -18,19 +18,19 @@
 'use strict';
 
 var React;
+var ReactDOM;
 var ReactTestUtils;
 
 var reactComponentExpect;
 
 describe('ReactContextValidator', function() {
   beforeEach(function() {
-    require('mock-modules').dumpCache();
+    jest.resetModuleRegistry();
 
     React = require('React');
+    ReactDOM = require('ReactDOM');
     ReactTestUtils = require('ReactTestUtils');
     reactComponentExpect = require('reactComponentExpect');
-
-    spyOn(console, 'error');
   });
 
   // TODO: This behavior creates a runtime dependency on propTypes. We should
@@ -122,8 +122,8 @@ describe('ReactContextValidator', function() {
     });
 
     var container = document.createElement('div');
-    React.render(<Parent foo="abc" />, container);
-    React.render(<Parent foo="def" />, container);
+    ReactDOM.render(<Parent foo="abc" />, container);
+    ReactDOM.render(<Parent foo="def" />, container);
     expect(actualComponentWillReceiveProps).toEqual({foo: 'def'});
     expect(actualShouldComponentUpdate).toEqual({foo: 'def'});
     expect(actualComponentWillUpdate).toEqual({foo: 'def'});
@@ -131,6 +131,8 @@ describe('ReactContextValidator', function() {
   });
 
   it('should check context types', function() {
+    spyOn(console, 'error');
+
     var Component = React.createClass({
       contextTypes: {
         foo: React.PropTypes.string.isRequired,
@@ -200,6 +202,8 @@ describe('ReactContextValidator', function() {
   });
 
   it('should check child context types', function() {
+    spyOn(console, 'error');
+
     var Component = React.createClass({
       childContextTypes: {
         foo: React.PropTypes.string.isRequired,
